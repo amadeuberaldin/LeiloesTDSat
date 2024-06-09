@@ -3,20 +3,25 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 import java.io.InputStream;
+import java.io.FileInputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ConectaDAO {
     private static final Logger logger = Logger.getLogger(ConectaDAO.class.getName());
     private static Connection conn = null;
-    
+
     private ConectaDAO() {
         // Construtor privado para evitar instância
     }
 
     public static Connection connectDB() throws SQLException {
         if (conn == null) {
-            try (InputStream input = ConectaDAO.class.getClassLoader().getResourceAsStream("config.properties")) {
+            try {
+                // Caminho relativo ao diretório raiz do projeto
+                String configFilePath = "src/config.properties";
+                InputStream input = new FileInputStream(configFilePath);
+
                 Properties prop = new Properties();
                 if (input == null) {
                     logger.log(Level.SEVERE, "Desculpe, não foi possível encontrar config.properties");
