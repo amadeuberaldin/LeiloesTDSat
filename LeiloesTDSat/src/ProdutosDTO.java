@@ -1,6 +1,8 @@
+
 import java.util.Objects;
 
 public class ProdutosDTO {
+
     private Integer id;
     private String nome;
     private Integer valor;
@@ -63,23 +65,27 @@ public class ProdutosDTO {
 
     @Override
     public String toString() {
-        return "ProdutosDTO{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", valor=" + valor +
-                ", status='" + status + '\'' +
-                '}';
+        return "ProdutosDTO{"
+                + "id=" + id
+                + ", nome='" + nome + '\''
+                + ", valor=" + valor
+                + ", status='" + status + '\''
+                + '}';
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         ProdutosDTO that = (ProdutosDTO) o;
-        return Objects.equals(id, that.id) &&
-               Objects.equals(nome, that.nome) &&
-               Objects.equals(valor, that.valor) &&
-               Objects.equals(status, that.status);
+        return Objects.equals(id, that.id)
+                && Objects.equals(nome, that.nome)
+                && Objects.equals(valor, that.valor)
+                && Objects.equals(status, that.status);
     }
 
     @Override

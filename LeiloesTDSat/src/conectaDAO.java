@@ -1,3 +1,4 @@
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -8,6 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ConectaDAO {
+
     private static final Logger logger = Logger.getLogger(ConectaDAO.class.getName());
     private static Connection conn = null;
 
@@ -16,7 +18,7 @@ public class ConectaDAO {
     }
 
     public static Connection connectDB() throws SQLException {
-        if (conn == null) {
+        if (conn == null || conn.isClosed()) {
             try {
                 // Caminho relativo ao diretório raiz do projeto
                 String configFilePath = "src/config.properties";
@@ -40,6 +42,8 @@ public class ConectaDAO {
                 logger.log(Level.SEVERE, "Erro ao conectar ao banco de dados: {0}", e.getMessage());
                 throw new SQLException("Erro ao conectar ao banco de dados", e);
             }
+        } else {
+            logger.log(Level.INFO, "Conexão com o banco de dados já está aberta.");
         }
         return conn;
     }
