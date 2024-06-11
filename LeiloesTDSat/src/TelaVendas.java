@@ -1,12 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 
-/**
- *
- * @author Vaio
- */
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 public class TelaVendas extends javax.swing.JFrame {
 
     /**
@@ -14,6 +10,7 @@ public class TelaVendas extends javax.swing.JFrame {
      */
     public TelaVendas() {
         initComponents();
+        preencherTabelaProdutosVendidos();
     }
 
     /**
@@ -95,4 +92,26 @@ public class TelaVendas extends javax.swing.JFrame {
     private javax.swing.JButton jbtVoltar;
     private javax.swing.JTable jtableProdutosVenditos;
     // End of variables declaration//GEN-END:variables
+private void preencherTabelaProdutosVendidos() {
+        try {
+            ProdutosDAO produtosdao = new ProdutosDAO();
+            ArrayList<ProdutosDTO> listagem = produtosdao.listarProdutosVendidos();
+
+            DefaultTableModel model = (DefaultTableModel) jtableProdutosVenditos.getModel();
+            model.setRowCount(0); // Limpar a tabela antes de preencher
+
+            for (ProdutosDTO produto : listagem) {
+                Object[] row = {
+                    produto.getId(),
+                    produto.getNome(),
+                    produto.getValor(),
+                    produto.getStatus()
+                };
+                model.addRow(row);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao listar os produtos vendidos: " + e.getMessage());
+        }
+    }
+
 }
